@@ -17,6 +17,7 @@ import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectVa
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/components/ui/use-toast";
 import { createBrowserSupabaseClient } from "@/lib/client-utils";
+import type { Database } from "@/lib/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState, type BaseSyntheticEvent } from "react";
@@ -281,6 +282,33 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
             </div>
           </form>
         </Form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+export function ViewSpeciesDialog({ species }: { species: Database["public"]["Tables"]["species"]["Row"] }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button className="mt-3 w-full">Learn More</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>{species.scientific_name}</DialogTitle>
+          <DialogDescription>Detailed species information</DialogDescription>
+        </DialogHeader>
+        <div className="space-y-3">
+          <div><b>Common Name:</b> {species.common_name ?? "—"}</div>
+          <div><b>Kingdom:</b> {species.kingdom}</div>
+          <div><b>Total Population:</b> {species.total_population?.toLocaleString() ?? "—"}</div>
+          <div><b>Description:</b> {species.description ?? "—"}</div>
+        </div>
+        <DialogClose asChild>
+          <Button variant="secondary" className="mt-4 w-full">Close</Button>
+        </DialogClose>
       </DialogContent>
     </Dialog>
   );
