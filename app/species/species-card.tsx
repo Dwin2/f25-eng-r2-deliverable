@@ -26,7 +26,7 @@ export default function SpeciesCard({ species, curUser }: { species: Species; cu
           
         </div>
         <div className = "relative"> 
-          <EditSpecies species={species} />
+          <EditSpecies species={species} /> curUser {curUser}
           </div>
         </>
         
