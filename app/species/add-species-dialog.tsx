@@ -24,6 +24,8 @@ import { useState, type BaseSyntheticEvent } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+type Species = Database["public"]["Tables"]["species"]["Row"];
+
 // We use zod (z) to define a schema for the "Add species" form.
 // zod handles validation of the input values with methods like .string(), .nullable(). It also processes the form inputs with .transform() before the inputs are sent to the database.
 
@@ -287,7 +289,7 @@ export default function AddSpeciesDialog({ userId }: { userId: string }) {
   );
 }
 
-export function ViewSpeciesDialog({ species }: { species: Database["public"]["Tables"]["species"]["Row"] }) {
+export function ViewSpeciesDialog({ species }: { species: Species }) {
   const [open, setOpen] = useState(false);
 
   return (
